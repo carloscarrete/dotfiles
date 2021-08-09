@@ -20,7 +20,8 @@
 ;background = ${xrdb:color0:#222}
 ;background = #331E1E1E
 ;background = #44343F
-background = #441E1E1E
+background = E41E1E1E
+;background = #441E1E1E
 background-alt = #bf1e1e1e
 ;foreground = ${xrdb:color7:#222}
 foreground = #ffffff
@@ -28,6 +29,39 @@ foreground-alt = #ffffff
 primary = #1b9fc6
 secondary = #ffffff
 alert = #bd2c40
+
+foreground-audio = #6cc3ff
+foreground-audiomute = #f81dff
+
+foreground-memory-icon = #7e7e7e
+foreground-memory = #7e7e7e
+foreground-memory-underline = #7e7e7e
+
+foreground-cpu-icon = #005e5b
+foreground-cpu-underline = #005e5b
+foreground-cpu-label = #005e5b
+
+foreground-wifi-underline = #9f78e1
+foreground-wifi-label-and-icon = #9f78e1
+
+foreground-wired-underline = #55aa55
+foreground-wired-icon = #55aa55
+foreground-wired-label = #55aa55
+
+foreground-battery-underline = #ffb52a
+foreground-battery-icon-charged = #ffb52a
+foreground-battery-icon-charging = #ffb52a
+foreground-battery-icon-discharging = #ffb52a
+foreground-battery-label-full = #ffb52a
+foreground-battery-label-charging = #ffb52a
+foreground-battery-label-discharging = #ffb52a
+
+foreground-label-clock = #0a6cf5
+foreground-underline-clock = #0a6cf5
+foreground-icon-clock = #0a6cf5
+
+foreground-power-normallabel = #e32222
+
 
 [bar/example]
 ;monitor = ${env:MONITOR:HDMI-1}
@@ -64,7 +98,7 @@ font-5 = Font Awesome 5 Brands:pixelsize=12;2
 modules-left = bspwm i3
 modules-center = xwindow pacman-updates
 ;modules-right = filesystem pulseaudio xkeyboard memory cpu wlan eth battery temperature  date powermenu
-modules-right = pulseaudio memory cpu wlan battery date powermenu
+modules-right = pulseaudio memory cpu wlan wired-network battery date powermenu
 
 ;;;;;;;;;;;;;;;;;;;;;;;separator = |
 tray-position = none
@@ -251,29 +285,39 @@ card = intel_backlight
 type = internal/cpu
 interval = 2
 format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #f90000
+;format-prefix-foreground = ${colors.foreground-alt}
+;color label of cpu icon
+format-prefix-foreground = ${colors.foreground-cpu-icon}
+format-underline = ${colors.foreground-cpu-underline}
 label = %percentage:2%%
+label-foreground = ${colors.foreground-cpu-label}
 
 [module/memory]
 type = internal/memory
 interval = 2
 format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
+;format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.foreground-memory-icon}
+content-foreground = #4bffdc
+format-underline = ${colors.foreground-memory-underline}
 label = %percentage_used%%
+label-foreground = ${colors.foreground-memory}
 
 [module/wlan]
 type = internal/network
 interface = wlo1
 interval = 3.0
 
-format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
-label-connected =  %essid%
+;format-connected = <ramp-signal> <label-connected>
+format-connected = <label-connected>
+format-connected-underline = ${colors.foreground-wifi-underline}
+label-connected =  KRT
+label-connected-foreground = ${colors.foreground-wifi-label-and-icon}
 
-format-disconnected =
+;format-disconnected =
 ;format-disconnected = <label-disconnected>
+;label-disconnected = X 
+;label-disconnected-foreground = #9f78e1
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
@@ -283,17 +327,19 @@ ramp-signal-1 = 
 ramp-signal-2 = 
 ramp-signal-3 = 
 ramp-signal-4 = 
-ramp-signal-foreground = ${colors.foreground-alt}
+;ramp-signal-foreground = ${colors.foreground-alt}
+ramp-signal-foreground = #9f78e1
 
-[module/eth]
+[module/wired-network]
 type = internal/network
-interface = enp1s0
+interface = eno1
 interval = 3.0
 
-format-connected-underline = #55aa55
+format-connected-underline = ${colors.foreground-wired-underline}
 format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
+format-connected-prefix-foreground = ${colors.foreground-wired-icon}
+label-connected = KRT
+label-connected-foreground = ${colors.foreground-wired-label}
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
@@ -312,20 +358,24 @@ time = %H:%M
 time-alt = %H:%M:%S
 
 format-prefix = 
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+;format-prefix-foreground = ${colors.foreground-alt}
+;Color label of icon's clock
+format-prefix-foreground = ${colors.foreground-icon-clock}
+format-underline = ${colors.foreground-underline-clock}
 
 label = %date% %time%
+;Color label of clock
+label-foreground = ${colors.foreground-label-clock}
 
 [module/pulseaudio]
 type = internal/pulseaudio
 
 format-volume = <label-volume> <bar-volume>
 label-volume =  %percentage%%
-label-volume-foreground = ${root.foreground}
+label-volume-foreground = ${colors.foreground-audio}
 
 label-muted =  muted
-label-muted-foreground = #e20000
+label-muted-foreground = ${colors.foreground-audiomute}
 
 bar-volume-width = 10
 bar-volume-foreground-0 = #55aa55
@@ -381,34 +431,50 @@ adapter = ACAD
 full-at = 98
 
 format-charging = <animation-charging> <label-charging>
-format-charging-underline = #ffb52a
+format-charging-underline = ${colors.foreground-battery-underline}
 
 format-discharging = <animation-discharging> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 
 format-full-prefix = " "
-format-full-prefix-foreground = ${colors.foreground-alt}
+;This is the color when the battery is charged
+format-full-prefix-foreground = ${colors.foreground-battery-icon-charged}
 format-full-underline = ${self.format-charging-underline}
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
+;ramp-capacity-0 = 
+;ramp-capacity-1 = 
+;ramp-capacity-2 = 
+;ramp-capacity-foreground = #ffb52a
 
 animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
 animation-charging-3 = 
 animation-charging-4 = 
-animation-charging-foreground = ${colors.foreground-alt}
+
+;This is the color when the battery is charging
+animation-charging-foreground = ${colors.foreground-battery-icon-charging}
 animation-charging-framerate = 750
 
 animation-discharging-0 = 
 
-animation-discharging-foreground = ${colors.foreground-alt}
+;animation-discharging-foreground = ${colors.foreground-alt} ;This is the color when the battery is discharging
+animation-discharging-foreground = ${colors.foreground-battery-icon-discharging}
 animation-discharging-framerate = 750
 
-label-full = Fully charged
+label-full = Full
+; This is the color when the battery if fully charged, ant above we can find out the label for naming it
+label-full-foreground = ${colors.foreground-battery-label-full}
+;This is the charging foreground color when the battery is charging
+label-charging-foreground = ${colors.foreground-battery-label-charging}
+
+;This is the charging foreground color when the battery is discharging
+label-discharging-foreground = ${colors.foreground-battery-label-discharging}
+;label-charging-background = #444
+;label-foreground = #444
+;label-background = #444
+;label-empty-background = #444
+
 
 [module/temperature]
 type = internal/temperature
@@ -437,15 +503,17 @@ expand-right = true
 format-spacing = 1
 
 label-open = 
-label-open-foreground = ${colors.secondary}
+label-open-foreground = ${colors.foreground-power-normallabel}
 label-close =  cancel
-label-close-foreground = ${colors.secondary}
+label-close-foreground = ${self.label-open-foreground}
 label-separator = |
 label-separator-foreground = ${colors.foreground-alt}
 
 menu-0-0 = reboot
+menu-0-0-foreground = ${self.label-open-foreground}
 menu-0-0-exec = systemctl reboot
 menu-0-1 = power off
+menu-0-1-foreground = ${self.label-open-foreground}
 menu-0-1-exec = systemctl poweroff
 
 
