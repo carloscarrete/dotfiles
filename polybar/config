@@ -20,7 +20,7 @@
 ;background = ${xrdb:color0:#222}
 ;background = #331E1E1E
 ;background = #44343F
-background = E41E1E1E
+background = #E41e1e1e
 ;background = #441E1E1E
 background-alt = #bf1e1e1e
 ;foreground = ${xrdb:color7:#222}
@@ -33,13 +33,13 @@ alert = #bd2c40
 foreground-audio = #6cc3ff
 foreground-audiomute = #f81dff
 
-foreground-memory-icon = #7e7e7e
-foreground-memory = #7e7e7e
-foreground-memory-underline = #7e7e7e
+foreground-memory-icon = #ff2c95
+foreground-memory = #ff2c95
+foreground-memory-underline = #ff2c95
 
-foreground-cpu-icon = #005e5b
-foreground-cpu-underline = #005e5b
-foreground-cpu-label = #005e5b
+foreground-cpu-icon = #9c2cff
+foreground-cpu-underline = #9c2cff
+foreground-cpu-label = #9c2cff
 
 foreground-wifi-underline = #9f78e1
 foreground-wifi-label-and-icon = #9f78e1
@@ -62,6 +62,7 @@ foreground-icon-clock = #0a6cf5
 
 foreground-power-normallabel = #e32222
 
+foreground-title = #FFF
 
 [bar/example]
 ;monitor = ${env:MONITOR:HDMI-1}
@@ -96,9 +97,8 @@ font-4 = Font Awesome 5 Free Solid:pixelsize=12;2
 font-5 = Font Awesome 5 Brands:pixelsize=12;2
 
 modules-left = bspwm i3
-modules-center = xwindow pacman-updates
-;modules-right = filesystem pulseaudio xkeyboard memory cpu wlan eth battery temperature  date powermenu
-modules-right = pulseaudio memory cpu wlan wired-network battery date powermenu
+modules-center = xwindow
+modules-right =  pulseaudio memory cpu wlan wired-network battery date powermenu
 
 ;;;;;;;;;;;;;;;;;;;;;;;separator = |
 tray-position = none
@@ -132,7 +132,8 @@ format-prefix-foreground = #ffbb00
 
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:30:...%
+label = %title:0:50:...%
+label-foreground = ${colors.foreground-title}
 format = <label>
 
 [module/spotify]
@@ -370,7 +371,7 @@ label-foreground = ${colors.foreground-label-clock}
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume = <label-volume> <bar-volume>
+format-volume = <label-volume>
 label-volume =  %percentage%%
 label-volume-foreground = ${colors.foreground-audio}
 
