@@ -7,6 +7,8 @@ text/x-ssa=org.gnome.gedit.desktop;
 video/x-matroska=vlc.desktop;
 image/jpeg=feh.desktop;
 image/png=feh.desktop;
+video/quicktime=vlc.desktop;
+application/pdf=firefox.desktop;
 
 [Default Applications]
 video/mp4=vlc.desktop
@@ -15,3 +17,5 @@ text/x-ssa=org.gnome.gedit.desktop
 video/x-matroska=vlc.desktop
 image/jpeg=feh.desktop
 image/png=feh.desktop
+video/quicktime=vlc.desktop
+application/pdf=firefox.desktop
